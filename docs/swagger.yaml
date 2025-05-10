@@ -1,0 +1,149 @@
+basePath: /
+definitions:
+  account.Account:
+    description: Account data including the account ID, account holder's name, and
+      the balance
+    properties:
+      balance:
+        description: Account balance
+        example: 1000
+        type: number
+      id:
+        description: Account ID
+        example: 1
+        type: integer
+      name:
+        description: Account holder's name
+        example: Jon
+        type: string
+    type: object
+  utils.ErrorResponse:
+    description: Standard error response
+    properties:
+      error:
+        example: Invalid data input
+        type: string
+    type: object
+  utils.SuccessResponse:
+    description: Generic success response (any JSON object)
+    properties:
+      data: {}
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a simple bank account system written in Go.
+  title: Bank Account System API
+  version: "1.0"
+paths:
+  /accounts:
+    post:
+      consumes:
+      - application/json
+      description: Create a new bank account and return account ID and details
+      parameters:
+      - description: Account details
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/account.Account'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/utils.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Create a new bank account
+      tags:
+      - accounts
+  /transfer:
+    post:
+      consumes:
+      - application/json
+      description: Transfers a specified amount from one account to another
+      parameters:
+      - description: Sender Account ID
+        in: body
+        name: sender_id
+        required: true
+        schema:
+          type: integer
+      - description: Receiver Account ID
+        in: body
+        name: receiver_id
+        required: true
+        schema:
+          type: integer
+      - description: Amount to transfer
+        in: body
+        name: amount
+        required: true
+        schema:
+          type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.SuccessResponse'
+        "400":
+          description: Invalid data input
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Transfer failed
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Transfers funds between two accounts
+      tags:
+      - transactions
+  /withdraw:
+    post:
+      consumes:
+      - application/json
+      description: Withdraws a specified amount from the account
+      parameters:
+      - description: Account ID
+        in: body
+        name: account_id
+        required: true
+        schema:
+          type: integer
+      - description: Amount to withdraw
+        in: body
+        name: amount
+        required: true
+        schema:
+          type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.SuccessResponse'
+        "400":
+          description: Invalid data input
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Withdrawal failed
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Withdraws an amount from an account
+      tags:
+      - accounts
+schemes:
+- http
+swagger: "2.0"
