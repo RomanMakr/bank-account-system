@@ -24,7 +24,7 @@ To get started with the Bank Account Management System, follow these steps:
 
 	- make build	Compiles the Go source code and creates an executable in the build/ folder.
     - make run	    Builds and runs the application locally.
-    - make test	    Runs all unit and integration tests in the project.
+    - make test	    Runs all  integration tests in the project.
     - make fmt	    Formats all Go source files using go fmt.
     - make clean	Cleans the build artifacts and resets the build directory.
     - make swagger	Generates Swagger documentation (swagger.json) from annotated Go code.
