@@ -13,7 +13,7 @@ import (
 var DB *sql.DB
 
 func InitDB()  error {
-	err := godotenv.Load("/home/roman/Desktop/bank-account-system/.env") // if relative path not work, use absolute path file
+	err := godotenv.Load("./.env") // if relative path not work, use absolute path file
 	if err != nil {
 		log.Fatal("Error loading .env file")
 		return err
